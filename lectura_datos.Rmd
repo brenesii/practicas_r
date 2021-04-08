@@ -1,0 +1,68 @@
+---
+title: "Practica leer datos"
+author: "Marco Solis"
+date: "7/4/2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(dplyr)
+library(readr)
+```
+
+# Importar datos
+
+Conjunto de datos salud, en variable `edad 20-34` contiene unos `-` que provocan que la misma se lea como `character`. Por ende vamos a decirle de manera explicita que lo lea como numerico.
+
+
+```{r}
+salud <- read_excel(path = "datos/salud.xlsx",
+                    col_types = c("text",
+                                  "numeric",
+                                  "numeric",
+                                  "numeric")
+                    )
+```
+## Leer archivo .csv
+
+```{r}
+salud_csv <- read_csv(file = "datos/salud.csv",
+                      col_types = cols(
+                        `Codigo iso3` = col_character(),
+                        anio = col_number(),
+                        `edad 15-17` = col_number(),
+                        `edad 20-34` = col_number()
+                      ))
+```
+
+## Leer archivo excluyendo filas
+
+```{r}
+comentario <- read_csv(file = "datos/comentario.csv",
+                       skip = 1)
+```
+
+## Leer archivo sin nombres de columnas
+
+```{r}
+encabezado <- read_csv(file = "datos/encabezado.csv",
+                       col_names = c("letras", "numeros"))
+```
+
+## Leer archivo con NA`s
+
+```{r}
+archivo_na <- read_csv(file = "datos/valores_faltantes.csv",
+                       skip = 2,
+                       na = c(".", "NA"))
+```
+
+
+
+
+
+
