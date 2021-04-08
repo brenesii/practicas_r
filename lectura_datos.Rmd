@@ -1,0 +1,107 @@
+---
+title: "practicas leer datos"
+author: "ronny"
+date: "4/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(dplyr)
+library(readr)
+library(janitor)
+```
+
+# Leer datos
+
+Conjunto de datos salud, en variable `edad 20-34` contiene unos `-` que 
+provocan que la misma se lea como `character`. Por ende vamos a decirle
+de manera explicita que lo lea como numerico. 
+
+```{r}
+# Por ser archivo .xlsx vamos a usar read_excel
+salud <- read_excel(path = "datos/salud.xlsx",
+                    col_types = c("text", 
+                                  "numeric", 
+                                  "numeric", 
+                                  "numeric")
+                    )
+```
+
+## Leer archivo .csv
+
+```{r}
+salud_csv <- read_csv(file = "datos/salud.csv",
+                      col_types = cols(
+                        `Codigo iso3` = col_character(),
+                        anio = col_number(),
+                        `edad 15-17` = col_number(),
+                        `edad 20-34` = col_double()
+                      ))
+```
+
+## Leer archivo excluyendo filas
+
+```{r}
+comentario <- read_csv(file = "datos/comentario.csv",
+                       skip = 1)
+```
+
+## Leer archivo sin nombres de columnas
+
+```{r}
+encabezado <- read_csv(file = "datos/encabezado.csv",
+                       col_names = c("letras", "numeros"))
+```
+
+## Leer archivo con NA's
+
+```{r}
+archivo_na <- read_csv(file = "datos/valores_faltantes.csv",
+                       skip = 2,
+                       na = c(".", "NA"))
+```
+
+## Introduccion al pipe
+
+```{r}
+salud_csv <- read_csv(file = "datos/salud.csv",
+                      col_types = cols(
+                        `Codigo iso3` = col_character(),
+                        anio = col_number(),
+                        `edad 15-17` = col_number(),
+                        `edad 20-34` = col_double()
+                      )) %>% 
+  clean_names()
+
+salud_csv %>% 
+  filter(anio > 2010) %>% 
+  select(edad_15_17, edad_20_34) %>%
+  filter(codigo_iso3 == "AFG")
+```
+
+```{r}
+regiones <- data.frame(id = c(254, 359, 147, 852),
+                    region = c("NORTE", "SUR", "NORTE", "ESTE"),
+                    monto = c(2500, 3700, 4200, 1200),
+                    tipo = c("A", "A", "C", "B"))
+
+otra_palabra <- regiones %>% 
+  filter(tipo == "Z") %>% 
+  select(tipo)
+
+nuevo_tipo <- regiones %>% 
+  filter(tipo == "A")
+
+daniel <- regiones %>% 
+  select(tipo)
+
+regiones %>% 
+  select(monto)
+
+daniel <- regiones %>% 
+  select(monto)
+```
+
+
