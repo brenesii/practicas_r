@@ -1,0 +1,46 @@
+---
+title: "reporte"
+author: "Ronny Hernández Mora"
+date: "3/29/2021"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapse: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(gt)
+```
+
+## Lista Capítulos
+Urganda la **desconocida**
+Amadís de Gaula a don Quijote de la Mancha
+Don Belianís de Grecia a don Quijote de la Mancha
+
+### Más capítulos
+
+| La señora Oriana  | a Dulcinea del Toboso        |
+| ----------------- |:---------------------------- | 
+| Gandalín          | escudero de Amadís de Gaula  | 
+| Sancho Panza      | escudero de don Quijote      | 
+
+* Del Donoso, poeta entreverado,
+* a Sancho Panza y Rocinante
+* A Rocinante
+
+```{r primer chunk}
+
+```
+
+# Otro titulo
+
+```{r segundo chunk}
+
+```
+
+## Segundo titulos
+
+
+![](r_logo.png)

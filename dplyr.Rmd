@@ -1,0 +1,94 @@
+---
+title: "practica_dplyr"
+author: "ronny"
+date: "4/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+# Datos
+
+```{r}
+regiones <- data.frame(id = c(254, 359, 147, 852),
+                    region = c("NORTE", "SUR", "NORTE", "ESTE"),
+                    monto = c(2500, 2500, 7200, 1200),
+                    tipo = c("A", "A", "C", "B"))
+```
+
+# Primer ejercicio
+
+Obtener registros con id = 254 y sitio = NORTE
+
+```{r}
+primero <- regiones %>% 
+  filter(id == 254 & region == "NORTE") %>% 
+  select(monto)
+
+# regiones %>% 
+#   select(monto, tipo) %>% 
+#   filter(region == "ESTE")
+
+regiones %>% 
+  filter(!is.na(monto))
+
+regiones %>% 
+  group_by(region) %>% 
+  summarise(
+    promedio = mean(monto),
+    suma = sum(monto),
+    total = n()
+  )
+
+1 == 1
+
+(1/49) * 49 == 1
+
+near(1/49 * 49, 1)
+
+regiones %>% 
+  filter(monto >= 1000 & monto <= 3000)
+
+regiones %>% 
+  mutate(nueva = "curso")
+
+regiones %>% 
+  mutate(variable = ifelse(monto == 7200, "alto", "bajo")) %>% 
+  arrange(desc(monto))
+
+iris %>% 
+  group_by(Species) %>% 
+  summarise(
+    mean_petalos = mean(Petal.Width, na.rm = TRUE),
+    total = n(),
+    sumatoria_sepalos = sum(Sepal.Width, na.rm = TRUE)
+  ) %>% 
+  mutate(clasificacion = ifelse(mean_petalos > 1.5, "grande", "pequeno")) %>% 
+  arrange(desc(mean_petalos))
+```
+
+
+## Datos ordenados
+
+```{r}
+# desordenar datos regiones
+
+regiones_untidy <- regiones %>% 
+  pivot_wider(-id, names_from = region, values_from = monto)
+
+regiones_ordenado <- regiones_untidy %>% 
+  pivot_longer(cols = c("NORTE", "SUR", "ESTE"), names_to = "check")
+
+regiones_ordenado %>% 
+  drop_na()
+```
+
+
+
+
+
+
+
